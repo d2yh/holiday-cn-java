@@ -7,41 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2025-07-17
+## [1.0.0] - 2026-07-17
 
 ### Added
-- Initial release of holiday-cn-java
-- `HolidayFetcher` class for fetching and caching Chinese holiday data
-- `HolidayInfo` data model compatible with holiday-cn format
-- Support for periodic automatic updates
-- Local file-based caching with configurable expiration
-- Support for multiple remote sources
-- Comprehensive unit tests
-- Maven build configuration
-- Documentation in English and Chinese
-- MIT License with proper attribution to holiday-cn
+- `HolidayConfig` — `.properties` configuration system with defaults and user override
+- `OffDayStrategy` interface with two implementations:
+  - `WeekendOnlyStrategy` (Strategy A): weekends as off-days
+  - `FestivalStrategy` (Strategy B): weekends + Spring Festival + National Day with weekend deferral
+- `LunarCalendar` — lookup-table-based lunar calendar utility (2000-2050)
+- `HolidayFetcher.addWorkDays(LocalDate, int)` — calculate date after N working days
+- `HolidayFetcher.isWorkDay(LocalDate)` — check if a date is a working day
+- `HolidayFetcher.hasDataForYear(int)` — check if data exists for a year
+- `HolidayInfo.isWeekendDay(LocalDate)` — static weekend check utility
+- Multi-level data loading: data directory → classpath → remote URL
+- Per-year JSON files in data directory with `holiday-meta.json` metadata
+- Full English and Chinese README documentation
+- 53 unit tests covering all features
 
-### Features
-- Fetch holiday data from remote URLs
-- Cache data locally with configurable duration
-- Parse JSON data in holiday-cn format
-- Query holidays by date or year
-- Scheduled periodic updates
-- Proper logging with Logback
-
----
-
-## Versioning
-
-### Version Format
-- MAJOR: Breaking changes
-- MINOR: New features, backward compatible
-- PATCH: Bug fixes
+### Changed
+- `HolidayFetcher` refactored to use `HolidayConfig` for all settings
+- Default cache duration changed from 24h to 10 days (14400 minutes)
+- `getHoliday()` and `getHolidaysByYear()` now fall back to strategy when no data exists
+- Data directory replaces single cache file approach
+- `pom.xml` version bumped to `1.0.0`
 
 ### Compatibility
 - Minimum Java version: 1.8
-- Maven version: 3.6+
-
-## Attribution
-
-This project data format and inspiration come from [holiday-cn](https://github.com/NateScarlet/holiday-cn).

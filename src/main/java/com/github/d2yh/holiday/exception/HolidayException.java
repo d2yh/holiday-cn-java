@@ -1,4 +1,4 @@
-package com.d2yh.holiday.exception;
+package com.github.d2yh.holiday.exception;
 
 /**
  * Base exception for holiday-cn-java
